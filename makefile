@@ -10,7 +10,10 @@ init: ## Start a new develop environment
 	cp docker-compose.yml.example docker-compose.yml
 	docker-compose up -d
 	docker-compose exec --user application laravel-101-nginx composer install
+	sleep 10
 	docker-compose exec --user application laravel-101-nginx php artisan migrate
+	docker-compose exec --user application laravel-101-nginx php artisan key:generate
+	xdg-open http://localhost:8080
 
 
 ##@ Composer

@@ -1,9 +1,17 @@
 version: '3'
 
+volumes:
+  laravel-101-mysql_data:
+
+networks:
+  internal:
+
 services:
   laravel-101-nginx:
     image: webdevops/php-nginx:8.2
     container_name: laravel-101-nginx
+    networks:
+      - internal
     volumes:
       - ./:/app
     working_dir: /app
@@ -11,3 +19,16 @@ services:
       - WEB_DOCUMENT_ROOT=/app/public
     ports:
       - "8080:80"
+
+  laravel-101-mysql:
+    image: mysql:5.7
+    container_name: laravel-101-mysql
+    networks:
+      - internal
+    volumes:
+      - laravel-101-mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=laravel
+      - MYSQL_USER=laravel
+      - MYSQL_PASSWORD=laravel
