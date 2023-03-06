@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -20,7 +22,7 @@ class UserController extends Controller
     {
         $users = User::query()
             ->orderBy('id', 'desc')
-            ->paginate(5);
+            ->get();
         return view('users.index', compact('users'));
     }
 
